@@ -1,5 +1,5 @@
 // ~/js-lab/type-lab.js
-let value = 340;
+let value = null;
 
 console.log(value);
 console.log(typeof value);
