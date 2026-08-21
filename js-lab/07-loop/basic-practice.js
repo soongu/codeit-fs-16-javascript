@@ -1,12 +1,13 @@
+/*
 let sum = 0;
 
 for (let i = 1; i <= 5; i++) {
   sum = sum + i;
-  console.log(sum);
 }
+console.log(sum);
 
 
-/*
+
 let count = 0;
 
 for (let i = 1; i <= 20; i++) {
@@ -16,13 +17,15 @@ for (let i = 1; i <= 20; i++) {
 console.log(count);
 
 
+
 let result = 1;
 
 for (let i = 1; i <= 4; i++) {
-  result = result * i;
+  result *= i;
 }
 
 console.log(result);
+
 
 
 let a = 0;
@@ -36,12 +39,16 @@ for (let i = 1; i <= 3; i++) {
 }
 
 
+
+
 let x = 10;
 
 for (let i = 1; i <= 5; i++) {
   x = x - i;
   console.log(x);
 }
+
+*/
 
 
 
@@ -51,4 +58,4 @@ for (let i = 10; i > 0; i -= 3) {
   total += i;
   console.log(i, total);
 }
-*/
+
