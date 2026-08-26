@@ -14,7 +14,7 @@ const textarea = document.querySelector('body form > #comment');
 console.log('찾은 태그: ', textarea);
 
 const header = document.querySelector('.post-header');
-console.log('찾은 것:', header.tagName);
+console.log('찾은 것:', header?.tagName);
 
 const again = document.querySelector('.post-header');
 console.log('두 번 찾으면 같은 것인가', header === again);
