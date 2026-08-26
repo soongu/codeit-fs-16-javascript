@@ -1,4 +1,11 @@
+
+
 // instagram-clone-js/js/dom.js
-console.log('--- 데이터와 화면 ---');
-console.log(`데이터 게시물 ${posts.length}개`);
-console.log(`화면 게시물 ${document.querySelectorAll('article').length}개`);
+const caption = document.querySelector("figcaption");
+console.log("캡션 글자:", caption.textContent);
+
+const username = document.querySelector(".post-header p");
+console.log("작성자:", username.textContent);
+
+caption.textContent = "새벽 러닝 🌙";
+console.log("바꾼 뒤:", caption.textContent);
