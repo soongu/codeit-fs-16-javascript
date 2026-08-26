@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>피드 · 인스타그램</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="feed.html">홈</a></li>
+          <li><a href="#">검색</a></li>
+          <li><a href="#">DM</a></li>
+          <li><a href="profile.html">프로필</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <article>
+        <header class="post-header">
+          <img src="https://picsum.photos/seed/jaehoon/40/40" alt="jaehoon 프로필 사진" />
+          <p>jaehoon</p>
+          <button type="button" class="more-btn">⋯</button>
+        </header>
+
+        <figure>
+          <img src="https://picsum.photos/seed/post1/600/600" alt="한강에서 찍은 노을 사진" />
+          <figcaption>오늘 한강 노을 실화냐 🌇</figcaption>
+        </figure>
+
+        <div class="post-actions">
+          <button type="button" class="icon-btn">♡</button>
+          <button type="button" class="icon-btn">💬</button>
+          <button type="button" class="icon-btn">↗</button>
+        </div>
+
+        <div class="hashtags">
+          <span class="hashtag-chip">#한강</span>
+          <span class="hashtag-chip">#노을</span>
+          <span class="hashtag-chip">#일상</span>
+        </div>
+
+        <footer>
+          <form class="comment-form" action="#" method="post">
+            <label for="comment" class="sr-only">댓글 달기</label>
+            <textarea id="comment" name="comment" rows="2" placeholder="댓글 달기..."></textarea>
+            <button type="submit" class="btn-primary">게시</button>
+          </form>
+        </footer>
+      </article>
+    </main>
+
+    <!-- <script src="js/feed.js"></script> -->
+    <script src="js/dom.js"></script>
+
+  </body>
+</html>
