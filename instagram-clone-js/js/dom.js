@@ -30,4 +30,22 @@ const comment =
 
 // step4
 const photo = document.querySelector('figure img');
-console.log(photo.attributes);
+console.log(photo.getAttribute('alt'));
+console.log(
+  document.querySelector('.post-actions').children[1].getAttribute('src'),
+);
+
+photo.setAttribute(
+  'src',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVTQySOMYofWD4gd7oyenqLBozcGn9NGicI9iTYXDNfw&s=10',
+);
+
+photo.setAttribute('alt', '귀여운 상어 사진');
+
+photo.setAttribute('title', '상어는 넘무 기여워~~~');
+
+const more = document.querySelector('.more-btn');
+console.log('type 속성이 있나:', more.hasAttribute('type'));
+more.removeAttribute('type');
+console.log('떼고 나면:', more.hasAttribute('type'));
+
