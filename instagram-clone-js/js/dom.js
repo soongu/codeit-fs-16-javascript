@@ -91,3 +91,50 @@ const show = (post) => {
 };
 
 show(posts[2]);
+
+const makeLink = (url, text) => { 
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.textContent = text;
+  box.append(link);
+};
+
+makeLink('https://www.google.com', '구글로 이동');
+makeLink('https://www.github.com', '깃허브로 고고고~');
+
+
+// box.innerHTML += `<a id=${userId} href="https://www.naver.com">네이버로 이동</a>`;
+
+
+// step 7
+const cardShell = `
+  <header class="post-header">
+    <img alt="" />
+    <p></p>
+    <button type="button" class="more-btn">⋯</button>
+  </header>
+
+  <figure>
+    <img alt="" />
+    <figcaption></figcaption>
+  </figure>
+
+  <div class="post-actions">
+    <button type="button" class="icon-btn">♡</button>
+    <button type="button" class="icon-btn">💬</button>
+    <button type="button" class="icon-btn">↗</button>
+  </div>
+
+  <div class="hashtags"></div>
+`;
+
+const fillLocation = (article, location) => {
+  const place = location?.name;
+
+  if (place) {
+    const line = document.createElement('p');
+    line.classList.add('post-location');
+    line.textContent = place;
+    article.querySelector('.post-header p').after(line);
+  }
+};
