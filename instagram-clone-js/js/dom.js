@@ -169,9 +169,27 @@ const createCard = (post) => {
   return article;
 };
 
-const main = document.querySelector('main');
-main.innerHTML = '';
+const feedMain = document.querySelector('main');
+feedMain.innerHTML = '';
 
 for (const post of posts) {
-  main.append(createCard(post));
+  feedMain.append(createCard(post));
 }
+
+
+const cards = [...feedMain.querySelectorAll('article')];
+const mismatched = cards.filter(
+  (article, index) =>
+    article.querySelectorAll('.hashtag-chip').length !==
+    posts[index].hashtags.length,
+);
+const leaked = [...feedMain.querySelectorAll('.hashtag-chip')].filter((chip) =>
+  chip.textContent.includes('undefined'),
+);
+
+console.log('--- 피드를 그렸어요 ---');
+console.log(`데이터${posts.length}장 · 화면${cards.length}장`);
+console.log(`칸이 남거나 모자란 카드${mismatched.length}장`);
+console.log(
+  `위치 줄${feedMain.querySelectorAll('.post-location').length}장 · 화면에 뜬 #undefined${leaked.length}개`,
+);

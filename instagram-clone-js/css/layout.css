@@ -139,3 +139,21 @@ article figure img {
   background: red;
   color: white;
 }
+
+ /* profile grid 3열 레이아웃 적용 */
+ main section:last-child ul {
+  display: flex;
+  flex-wrap: wrap;
+  width: 70%;
+ }
+ main section:last-child ul li {
+  width: 30%;
+  min-width: 200px;
+  max-height: 200px;
+  overflow: hidden;
+  margin-bottom: 2%;
+  margin-right: 2%;
+ }
+ main section:last-child ul li img {
+  object-fit: cover;
+ }
