@@ -1,4 +1,7 @@
 /* Step 1: CSS 연결 확인 + 태그/클래스/ID 선택자 */
+* {
+  box-sizing: border-box;
+}
 
 input {
   border: 1px solid #999;
