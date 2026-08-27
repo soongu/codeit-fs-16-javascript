@@ -94,4 +94,4 @@ const fillPost = (article, post) => {
 };
 
 const card = document.querySelector('article');
-fillPost(card, ranked[0]);
+fillPost(card, ranked[3]);
