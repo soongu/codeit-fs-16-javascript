@@ -59,3 +59,35 @@ chips.forEach((chip, index) => {
 console.log(`지운 뒤 남은 칩:${card.querySelectorAll(".hashtag-chip").length}칸`);
 console.log([...card.querySelectorAll(".hashtag-chip")].map((chip) => chip.textContent).join(" "));
 
+
+// step 4
+const fillTags = (article, hashtags) => {
+  const box = article.querySelector('.hashtags');
+
+  for (const old of box.querySelectorAll('.hashtag-chip')) {
+    old.remove();
+  }
+
+  for (const tag of hashtags) {
+    const chip = document.createElement('span');
+    chip.classList.add('hashtag-chip');
+    chip.textContent = `#${tag}`;
+    box.append(chip);
+  }
+};
+
+fillTags(card, posts[4].hashtags);
+
+const show = (post) => {
+  fillTags(card, post.hashtags);
+  const chips = [...card.querySelectorAll('.hashtag-chip')];
+  const shown =
+    chips.length === 0
+      ? '(없음)'
+      : chips.map((chip) => chip.textContent).join(' ');
+  console.log(
+    `${post.username} 태그${post.hashtags.length}개 → 칩${chips.length}칸${shown}`,
+  );
+};
+
+show(posts[2]);

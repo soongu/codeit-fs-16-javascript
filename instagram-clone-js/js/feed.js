@@ -26,7 +26,7 @@ const posts = [
     likes: 1240,
     image: "https://picsum.photos/seed/post1/600/600",
     alt: "한강에서 찍은 노을 사진",
-    hashtags: ["한강", "노을", "서울"],
+    hashtags: ["한강", "노을", "서울", "실화냐"],
   },
   {
     id: 4,

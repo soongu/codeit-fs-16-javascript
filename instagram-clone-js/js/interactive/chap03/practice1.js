@@ -1,4 +1,5 @@
 
+
 const [firstSect, secondSect]
   = [...document.querySelectorAll('section')];
 
@@ -11,11 +12,14 @@ statisticsUl.append(likeListItem);
 const [postLi, followerLi, followingLi, likeLi]
   = [...statisticsUl.children];
 
-console.log(`통계 ${statisticsUl.children.length}줄: ${postLi.textContent} · ${followerLi.textContent} · ${followingLi.textContent} · ${likeLi.textContent}`);
+console.log(
+  `통계 ${statisticsUl.children.length}줄: ` +
+    [...statisticsUl.children].map((li) => li.textContent).join(' · '),
+);
 
 const imageSectionUl = secondSect.querySelector('ul');
 
-// 지우기 전 게시물 수
+// // 지우기 전 게시물 수
 const beforePostCount = imageSectionUl.children.length;
 
 imageSectionUl.children[0].remove();
