@@ -155,9 +155,9 @@ const fillPost = (article, post) => {
 
   article.querySelector('figcaption').textContent = post.caption;
 
-  article.querySelectorAll('.hashtag-chip').forEach((chip, index) => {
-    chip.textContent = `#${post.hashtags[index]}`;
-  });
+  // article.querySelectorAll('.hashtag-chip').forEach((chip, index) => {
+  //   chip.textContent = `#${post.hashtags[index]}`;
+  // });
 };
 
 const createCard = (post) => {
@@ -172,6 +172,6 @@ const createCard = (post) => {
 const main = document.querySelector('main');
 main.innerHTML = '';
 
-const firstCard = createCard(posts[0]);
-
-main.append(firstCard);
+for (const post of posts) {
+  main.append(createCard(post));
+}
