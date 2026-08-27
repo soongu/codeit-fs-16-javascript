@@ -138,3 +138,24 @@ const fillLocation = (article, location) => {
     article.querySelector('.post-header p').after(line);
   }
 };
+
+const fillPost = (article, post) => {
+  article.querySelector('.post-header p').textContent = post.username;
+
+  const avatar = article.querySelector('.post-header img');
+  avatar.setAttribute(
+    'src',
+    `https://picsum.photos/seed/${post.username}/40/40`,
+  );
+  avatar.setAttribute('alt', `${post.username} 프로필 사진`);
+
+  const photo = article.querySelector('figure img');
+  photo.setAttribute('src', post.image);
+  photo.setAttribute('alt', post.alt);
+
+  article.querySelector('figcaption').textContent = post.caption;
+
+  article.querySelectorAll('.hashtag-chip').forEach((chip, index) => {
+    chip.textContent = `#${post.hashtags[index]}`;
+  });
+};
