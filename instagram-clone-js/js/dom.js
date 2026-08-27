@@ -159,3 +159,19 @@ const fillPost = (article, post) => {
     chip.textContent = `#${post.hashtags[index]}`;
   });
 };
+
+const createCard = (post) => {
+  const article = document.createElement('article');
+  article.innerHTML = cardShell;
+
+  fillPost(article, post);
+  fillTags(article, post.hashtags);
+  return article;
+};
+
+const main = document.querySelector('main');
+main.innerHTML = '';
+
+const firstCard = createCard(posts[0]);
+
+main.append(firstCard);
