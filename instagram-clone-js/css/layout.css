@@ -155,5 +155,6 @@ article figure img {
   margin-right: 2%;
  }
  main section:last-child ul li img {
+  width: 100%;
   object-fit: cover;
  }
