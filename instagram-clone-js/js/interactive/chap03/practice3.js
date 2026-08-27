@@ -5,6 +5,7 @@ const postGridImages = [
   { image: 'https://picsum.photos/seed/post3/300/300', alt: '세번째 이미지' },
   { image: 'https://picsum.photos/seed/post4/300/300', alt: '네번째 이미지' },
   { image: 'https://picsum.photos/seed/post5/300/300', alt: '다섯번째 이미지' },
+  { image: 'https://picsum.photos/seed/post6/300/300', alt: '여섯번째 이미지' },
 ];
 
 // console.log(postGridImages);
@@ -13,6 +14,7 @@ const postGridImages = [
 const imageSectionUl = document
   .querySelectorAll('section')[1]
   .querySelector('ul');
+
 
 // 3. 지우기 전 장 수 찍기
 const imageListItems = [...imageSectionUl.children];
@@ -25,8 +27,8 @@ for (const listItem of imageListItems) {
 console.log(`지운 뒤 ${imageSectionUl.children.length}장`);
 
 // 5. 데이터 배열을 화면에 그리기
-// li태그를 만드는 함수 정의
-const createImageCard = ({image, alt}) => { 
+// li태그를 1개 만드는 함수 정의
+const createImageCard = ({ image, alt }) => { 
   const imageListItem = document.createElement('li');
   
   const imageTag = document.createElement('img');
