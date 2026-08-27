@@ -78,4 +78,7 @@ const posts = [
   },
 ];
 
-
+// 제일 좋아요가 많은 게시물 뽑기
+// 좋아요가 많은 순으로 내림차 정렬
+const ranked = [...posts].sort((a, b) => b.likes - a.likes);
+// console.log(ranked);

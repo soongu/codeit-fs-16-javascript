@@ -134,3 +134,8 @@ article figure img {
   font-size: 0.8rem;
   color: #8e8e8e;
 }
+
+.my-chip {
+  background: red;
+  color: white;
+}

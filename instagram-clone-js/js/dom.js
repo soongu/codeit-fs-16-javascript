@@ -49,3 +49,49 @@ console.log('type 속성이 있나:', more.hasAttribute('type'));
 more.removeAttribute('type');
 console.log('떼고 나면:', more.hasAttribute('type'));
 
+// step5
+console.log(more.getAttribute('class'));
+
+const label = document.querySelector('.sr-only');
+console.log('라벨 글자:', label.textContent);
+console.log('sr-only 가 붙어 있나:', label.classList.contains('sr-only'));
+
+console.log('화면에서 차지하는 너비:', label.offsetWidth);
+
+label.classList.remove('sr-only');
+console.log('클래스를 뗀 뒤 1픽셀보다 넓은가:', label.offsetWidth > 1);
+
+label.classList.add('sr-only');
+console.log('다시 붙인 뒤 너비:', label.offsetWidth);
+
+const chip = document.querySelector('.hashtag-chip');
+
+chip.addEventListener('click', () => { 
+  chip.classList.toggle('my-chip');
+});
+
+// step7
+// article: 태그, post: 피드게시물 1개의 데이터
+const fillPost = (article, post) => {
+  article.querySelector('.post-header p').textContent = post.username;
+
+  const avatar = article.querySelector('.post-header img');
+  avatar.setAttribute(
+    'src',
+    `https://picsum.photos/seed/${post.username}/40/40`,
+  );
+  avatar.setAttribute('alt', `${post.username} 프로필 사진`);
+
+  const photo = article.querySelector('figure img');
+  photo.setAttribute('src', post.image);
+  photo.setAttribute('alt', post.alt);
+
+  article.querySelector('figcaption').textContent = post.caption;
+
+  article.querySelectorAll('.hashtag-chip').forEach((chip, index) => {
+    chip.textContent = `#${post.hashtags[index]}`;
+  });
+};
+
+const card = document.querySelector('article');
+fillPost(card, ranked[0]);
