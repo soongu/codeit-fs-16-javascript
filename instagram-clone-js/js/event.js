@@ -1,8 +1,14 @@
 
-const firstHeart = document.querySelector('.icon-btn');
+const buttons = document.querySelectorAll('.icon-btn');
+// console.log(buttons);
 
-const alertLike = () => {
-  alert('좋아요를 눌렀어요!');
-};
+buttons.forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    const pushed = event.target.textContent;
+    const attached = event.currentTarget.textContent;
 
-firstHeart.addEventListener('click', alertLike);
+    console.log(
+      `눌린 것: ${pushed} · 리스너를 붙인 것: ${attached} · 둘이 같은가${event.target === event.currentTarget}`,
+    );
+  });
+});
