@@ -1,5 +1,5 @@
 
-let feedPosts = posts.map((post) => ({ ...post, liked: false, comments: [] }));
+let feedPosts = loadFeed() ?? posts.map((post) => ({ ...post, liked: false, comments: [] }));
 
 const card = document.querySelector('article');
 
@@ -137,8 +137,8 @@ const toggleLike = id => {
       }
       : post
   );
-  console.log('ok');
 
+  saveFeed(feedPosts);
   render(feedPosts);
 };
 
@@ -176,6 +176,7 @@ const addComment = (id, text) => {
       : post
   ));
 
+  saveFeed(feedPosts);
   render(feedPosts);
 };
 
