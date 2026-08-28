@@ -1,12 +1,9 @@
 const card = document.querySelector('article');
 
-
 // step1 태그 생성
 const line = document.createElement('p');
 line.classList.add('post-location');
 line.textContent = '여의도 한강공원';
-
-
 
 const header = card.querySelector('.post-header');
 
@@ -14,17 +11,16 @@ const headerTitle = header.querySelector('p');
 
 headerTitle.after(line);
 
-
 for (const child of header.children) {
   console.log(`${child.tagName}, ${child.className || '(클래스 없음)'}`);
 }
 
 // instagram-clone-js/js/dom.js
-const box = document.querySelector(".hashtags");
-const first = box.querySelector(".hashtag-chip");
+const box = document.querySelector('.hashtags');
+const first = box.querySelector('.hashtag-chip');
 
 const mark = (text) => {
-  const span = document.createElement("span");
+  const span = document.createElement('span');
   span.textContent = text;
   return span;
 };
@@ -34,12 +30,10 @@ const mark = (text) => {
 // first.before(mark("[before]"));
 // first.after(mark("[after]"));
 
-
 // step 3
 // instagram-clone-js/js/dom.js
 const quiet = posts[1];
-const chips = card.querySelectorAll(".hashtag-chip");
-
+const chips = card.querySelectorAll('.hashtag-chip');
 
 chips.forEach((chip, index) => {
   if (index < quiet.hashtags.length) {
@@ -48,8 +42,6 @@ chips.forEach((chip, index) => {
     chip.remove();
   }
 });
-
-
 
 // step 4
 const fillTags = (article, hashtags) => {
@@ -83,7 +75,7 @@ const show = (post) => {
 
 show(posts[2]);
 
-const makeLink = (url, text) => { 
+const makeLink = (url, text) => {
   const link = document.createElement('a');
   link.setAttribute('href', url);
   link.textContent = text;
@@ -92,9 +84,6 @@ const makeLink = (url, text) => {
 
 makeLink('https://www.google.com', '구글로 이동');
 makeLink('https://www.github.com', '깃허브로 고고고~');
-
-
-
 
 // step 7
 const cardShell = `
@@ -160,20 +149,15 @@ const createCard = (post) => {
   return article;
 };
 
-const feedMain = document.querySelector('main');
-feedMain.innerHTML = '';
+const render = (posts) => {
+  const feedMain = document.querySelector('main');
+  feedMain.innerHTML = '';
 
-for (const post of posts) {
-  feedMain.append(createCard(post));
-}
+  for (const post of posts) {
+    feedMain.append(createCard(post));
+  }
+};
+
+render(posts);
 
 
-const cards = [...feedMain.querySelectorAll('article')];
-const mismatched = cards.filter(
-  (article, index) =>
-    article.querySelectorAll('.hashtag-chip').length !==
-    posts[index].hashtags.length,
-);
-const leaked = [...feedMain.querySelectorAll('.hashtag-chip')].filter((chip) =>
-  chip.textContent.includes('undefined'),
-);
