@@ -12,7 +12,7 @@ const headerTitle = header.querySelector('p');
 headerTitle.after(line);
 
 for (const child of header.children) {
-  console.log(`${child.tagName}, ${child.className || '(클래스 없음)'}`);
+  // console.log(`${child.tagName}, ${child.className || '(클래스 없음)'}`);
 }
 
 // instagram-clone-js/js/dom.js
@@ -68,9 +68,9 @@ const show = (post) => {
     chips.length === 0
       ? '(없음)'
       : chips.map((chip) => chip.textContent).join(' ');
-  console.log(
-    `${post.username} 태그${post.hashtags.length}개 → 칩${chips.length}칸${shown}`,
-  );
+  // console.log(
+  //   `${post.username} 태그${post.hashtags.length}개 → 칩${chips.length}칸${shown}`,
+  // );
 };
 
 show(posts[2]);
