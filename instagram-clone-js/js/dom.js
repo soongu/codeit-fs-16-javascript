@@ -1,16 +1,12 @@
 const card = document.querySelector('article');
 
-console.log('만들기 전:', card.querySelector('.post-location'));
 
 // step1 태그 생성
 const line = document.createElement('p');
 line.classList.add('post-location');
 line.textContent = '여의도 한강공원';
 
-console.log(line);
 
-console.log('만든 직후:', card.querySelector('.post-location'));
-console.log('만든 요소의 부모:', line.parentElement);
 
 const header = card.querySelector('.post-header');
 
@@ -18,7 +14,6 @@ const headerTitle = header.querySelector('p');
 
 headerTitle.after(line);
 
-console.log('붙인 뒤:', card.querySelector('.post-location').textContent);
 
 for (const child of header.children) {
   console.log(`${child.tagName}, ${child.className || '(클래스 없음)'}`);
@@ -39,14 +34,12 @@ const mark = (text) => {
 // first.before(mark("[before]"));
 // first.after(mark("[after]"));
 
-console.log([...box.children].map((el) => el.textContent).join(" "));
 
 // step 3
 // instagram-clone-js/js/dom.js
 const quiet = posts[1];
 const chips = card.querySelectorAll(".hashtag-chip");
 
-console.log(`${quiet.username} 님 태그${quiet.hashtags.length}개 · 화면 칩${chips.length}칸`);
 
 chips.forEach((chip, index) => {
   if (index < quiet.hashtags.length) {
@@ -56,8 +49,6 @@ chips.forEach((chip, index) => {
   }
 });
 
-console.log(`지운 뒤 남은 칩:${card.querySelectorAll(".hashtag-chip").length}칸`);
-console.log([...card.querySelectorAll(".hashtag-chip")].map((chip) => chip.textContent).join(" "));
 
 
 // step 4
@@ -103,7 +94,6 @@ makeLink('https://www.google.com', '구글로 이동');
 makeLink('https://www.github.com', '깃허브로 고고고~');
 
 
-// box.innerHTML += `<a id=${userId} href="https://www.naver.com">네이버로 이동</a>`;
 
 
 // step 7
@@ -155,9 +145,6 @@ const fillPost = (article, post) => {
 
   article.querySelector('figcaption').textContent = post.caption;
 
-  // article.querySelectorAll('.hashtag-chip').forEach((chip, index) => {
-  //   chip.textContent = `#${post.hashtags[index]}`;
-  // });
 };
 
 const createCard = (post) => {
@@ -185,11 +172,4 @@ const mismatched = cards.filter(
 );
 const leaked = [...feedMain.querySelectorAll('.hashtag-chip')].filter((chip) =>
   chip.textContent.includes('undefined'),
-);
-
-console.log('--- 피드를 그렸어요 ---');
-console.log(`데이터${posts.length}장 · 화면${cards.length}장`);
-console.log(`칸이 남거나 모자란 카드${mismatched.length}장`);
-console.log(
-  `위치 줄${feedMain.querySelectorAll('.post-location').length}장 · 화면에 뜬 #undefined${leaked.length}개`,
 );

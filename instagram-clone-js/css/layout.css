@@ -158,3 +158,8 @@ article figure img {
   width: 100%;
   object-fit: cover;
  }
+
+ /* 좋아요 누르면 빨강색으로 변경 */
+ .is-liked {
+  color: #f00;
+ }
