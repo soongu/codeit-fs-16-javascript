@@ -69,6 +69,20 @@ const fillLocation = (article, location) => {
   }
 };
 
+const fillComments = (article, comments) => {
+  const list = article.querySelector('.comment-list');
+
+  for (const old of list.querySelectorAll('li')) {
+    old.remove();
+  }
+
+  for (const text of comments) {
+    const line = document.createElement('li');
+    line.textContent = text;
+    list.append(line);
+  }
+};
+
 const fillPost = (article, post) => {
 
   article.setAttribute('data-id', post.id);
@@ -102,6 +116,7 @@ const fillPost = (article, post) => {
   
   fillLocation(article, post.location);
   fillTags(article, post.hashtags);
+  fillComments(article, post.comments);
 
   const box = article.querySelector('.comment-form textarea');
   box.setAttribute('id', `comment-${post.id}`);
@@ -196,7 +211,7 @@ feedMain.addEventListener('click', event => {
 
 feedMain.addEventListener('submit', (event) => {
   event.preventDefault();
-  // alert('이벤트 발생!');
+  
   
   // 어떤 피드에 댓글을 썼는지
   const id = Number(event.target.closest('article').getAttribute('data-id'));
