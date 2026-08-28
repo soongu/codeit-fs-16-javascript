@@ -112,8 +112,8 @@ const cardShell = `
 
   <footer>
     <form class="comment-form" action="#" method="post">
-      <label for="comment" class="sr-only">댓글 달기</label>
-      <textarea id="comment" name="comment" rows="2" placeholder="댓글 달기..."></textarea>
+      <label class="sr-only">댓글 달기</label>
+      <textarea name="comment" rows="2" placeholder="댓글 달기..."></textarea>
       <button type="submit" class="btn-primary">게시</button>
     </form>
   </footer>
@@ -161,9 +161,15 @@ const fillPost = (article, post) => {
     likeBtn.classList.remove('is-liked');
   }
   
-
   fillLocation(article, post.location);
   fillTags(article, post.hashtags);
+
+  const box = article.querySelector('.comment-form textarea');
+  box.setAttribute('id', `comment-${post.id}`);
+  
+  article
+    .querySelector('.comment-form label')
+    .setAttribute('for', `comment-${post.id}`);
 };
 
 let feedPosts = posts.map(post => ({ ...post, liked: false }));
@@ -226,5 +232,7 @@ feedMain.addEventListener('click', event => {
     toggleLike(Number(id));
   } else if (event.target.closest('.share-btn')) {
     window.location.hash = `post-${id}`;
+  } else if (event.target.closest('.comment-btn')) {
+    document.querySelector(`#comment-${id}`).focus();
   }
 });
