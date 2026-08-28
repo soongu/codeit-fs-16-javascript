@@ -107,6 +107,16 @@ const cardShell = `
   <p class="like-count"></p>
 
   <div class="hashtags"></div>
+
+  <ul class="comment-list"></ul>
+
+  <footer>
+    <form class="comment-form" action="#" method="post">
+      <label for="comment" class="sr-only">댓글 달기</label>
+      <textarea id="comment" name="comment" rows="2" placeholder="댓글 달기..."></textarea>
+      <button type="submit" class="btn-primary">게시</button>
+    </form>
+  </footer>
 `;
 
 const fillLocation = (article, location) => {
@@ -123,6 +133,8 @@ const fillLocation = (article, location) => {
 const fillPost = (article, post) => {
 
   article.setAttribute('data-id', post.id);
+  // 공유하기 기능을 위한 id 부여
+  article.setAttribute('id', `post-${post.id}`);
 
   article.querySelector('.post-header p').textContent = post.username;
 
@@ -210,7 +222,9 @@ feedMain.addEventListener('click', event => {
   const article = event.target.closest('article');
   const id = article.getAttribute('data-id');
 
-  if (event.target.closest('.like-btn')) {
+  if (event.target.closest('.like-btn')) { // 좋아요 버튼에 대한 동작
     toggleLike(Number(id));
+  } else if (event.target.closest('.share-btn')) {
+    window.location.hash = `post-${id}`;
   }
 });
