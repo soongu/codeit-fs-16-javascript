@@ -28,7 +28,8 @@ form.addEventListener('submit', event => {
   event.preventDefault();
 
   // 3. 입력값 읽고 앞뒤공백 자르기
-  const newBioText = form.querySelector('textarea').value.trim();
+  const textarea = form.querySelector('textarea');
+  const newBioText = textarea.value.trim();
 
   //4. 문자가 빈 문자열이면 종료
   if (newBioText === '') {
@@ -39,6 +40,9 @@ form.addEventListener('submit', event => {
   // 5. 아니면 p태그의 값을 지금 입력한 값으로 바꾸기
   bio.textContent = newBioText;
   console.log(`소개를 바꿨어요 - ${newBioText}`);
+
+  // 추가: 입력이 끝나면 반영된 입력창 비우기
+  textarea.value = '';
 });
 
 // 6. 파일 맨 아래에서 처음 소개 찍기
