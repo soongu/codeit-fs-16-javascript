@@ -9,6 +9,7 @@ form.style.width = '50%';
 form.style.display = 'flex';
 form.style.flexDirection = 'column';
 form.style.gap = '10px';
+
 form.innerHTML = `
   <label for="intro-box">소개</label>
   <textarea id="intro-box" rows="5"></textarea>

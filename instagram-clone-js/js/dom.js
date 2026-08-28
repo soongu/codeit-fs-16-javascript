@@ -1,49 +1,13 @@
+
+let feedPosts = posts.map((post) => ({ ...post, liked: false, comments: [] }));
+
 const card = document.querySelector('article');
 
-// step1 태그 생성
-const line = document.createElement('p');
-line.classList.add('post-location');
-line.textContent = '여의도 한강공원';
 
-const header = card.querySelector('.post-header');
-
-const headerTitle = header.querySelector('p');
-
-headerTitle.after(line);
-
-for (const child of header.children) {
-  // console.log(`${child.tagName}, ${child.className || '(클래스 없음)'}`);
-}
-
-// instagram-clone-js/js/dom.js
 const box = document.querySelector('.hashtags');
 const first = box.querySelector('.hashtag-chip');
 
-const mark = (text) => {
-  const span = document.createElement('span');
-  span.textContent = text;
-  return span;
-};
 
-// box.prepend(mark("[prepend]"));
-// box.append(mark("[append]"));
-// first.before(mark("[before]"));
-// first.after(mark("[after]"));
-
-// step 3
-// instagram-clone-js/js/dom.js
-const quiet = posts[1];
-const chips = card.querySelectorAll('.hashtag-chip');
-
-chips.forEach((chip, index) => {
-  if (index < quiet.hashtags.length) {
-    chip.textContent = `#${quiet.hashtags[index]}`;
-  } else {
-    chip.remove();
-  }
-});
-
-// step 4
 const fillTags = (article, hashtags) => {
   const box = article.querySelector('.hashtags');
 
@@ -59,31 +23,6 @@ const fillTags = (article, hashtags) => {
   }
 };
 
-fillTags(card, posts[4].hashtags);
-
-const show = (post) => {
-  fillTags(card, post.hashtags);
-  const chips = [...card.querySelectorAll('.hashtag-chip')];
-  const shown =
-    chips.length === 0
-      ? '(없음)'
-      : chips.map((chip) => chip.textContent).join(' ');
-  // console.log(
-  //   `${post.username} 태그${post.hashtags.length}개 → 칩${chips.length}칸${shown}`,
-  // );
-};
-
-show(posts[2]);
-
-const makeLink = (url, text) => {
-  const link = document.createElement('a');
-  link.setAttribute('href', url);
-  link.textContent = text;
-  box.append(link);
-};
-
-makeLink('https://www.google.com', '구글로 이동');
-makeLink('https://www.github.com', '깃허브로 고고고~');
 
 // step 7
 const cardShell = `
@@ -172,7 +111,6 @@ const fillPost = (article, post) => {
     .setAttribute('for', `comment-${post.id}`);
 };
 
-let feedPosts = posts.map(post => ({ ...post, liked: false }));
 
 const toggleLike = id => { 
   feedPosts = feedPosts.map(post => 
@@ -211,6 +149,25 @@ const render = (posts) => {
 render(feedPosts);
 
 
+// 댓글을 등록하는 함수
+const addComment = (id, text) => { 
+  // 댓글이 작성되면 댓글의 내용을 posts배열에 있는 해당 피드 객체를 찾아서
+  // 그 객체 안에 comments배열에 쌓는다.
+
+  //1. id에 해당하는 객체를 탐색해낸다.
+  feedPosts = feedPosts.map(post => (
+    post.id === id
+      ? { ...post, comments: [...post.comments, text] } 
+      : post
+  ));
+
+  render(feedPosts);
+};
+
+
+
+//=========== 이벤트 바인딩 ==============//
+
 // 전역적으로 main에 이벤트를 딱 1번만 건다.
 feedMain.addEventListener('click', event => {
 
@@ -235,4 +192,18 @@ feedMain.addEventListener('click', event => {
   } else if (event.target.closest('.comment-btn')) {
     document.querySelector(`#comment-${id}`).focus();
   }
+});
+
+feedMain.addEventListener('submit', (event) => {
+  event.preventDefault();
+  // alert('이벤트 발생!');
+  
+  // 어떤 피드에 댓글을 썼는지
+  const id = Number(event.target.closest('article').getAttribute('data-id'));
+  // 무슨 댓글을 썼는지
+  const text = event.target.querySelector('textarea').value.trim();
+
+  addComment(id, text);
+
+
 });
