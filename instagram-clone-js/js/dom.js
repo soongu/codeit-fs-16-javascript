@@ -136,9 +136,33 @@ const fillPost = (article, post) => {
 
   article.querySelector('figcaption').textContent = post.caption;
   article.querySelector('.like-count').textContent = `좋아요 ${post.likes}개`;
+  const likeBtn = article.querySelector('.icon-btn');
+  if (post.liked) {
+    likeBtn.textContent = '♥';
+    likeBtn.classList.add('is-liked');
+  } else {
+    likeBtn.textContent = '♡';
+    likeBtn.classList.remove('is-liked');
+  }
+  
 
   fillLocation(article, post.location);
   fillTags(article, post.hashtags);
+};
+
+let feedPosts = posts.map(post => ({...post, liked: false}));
+
+const toggleLike = id => { 
+  feedPosts = feedPosts.map(post =>
+    post.id === id
+      ? {
+        ...post,
+        liked: !post.liked,
+        likes: post.likes + (post.liked ? -1 : 1)
+      }
+      : post
+  );
+  render(feedPosts);
 };
 
 const createCard = (post) => {
@@ -146,6 +170,11 @@ const createCard = (post) => {
   article.innerHTML = cardShell;
 
   fillPost(article, post);
+
+  article.querySelector('.icon-btn').addEventListener('click', event => { 
+    toggleLike(post.id);
+  });
+
   return article;
 };
 
@@ -158,6 +187,6 @@ const render = (posts) => {
   }
 };
 
-render(posts);
+render(feedPosts);
 
 
