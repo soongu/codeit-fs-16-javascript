@@ -121,6 +121,9 @@ const fillLocation = (article, location) => {
 };
 
 const fillPost = (article, post) => {
+
+  article.setAttribute('data-id', post.id);
+
   article.querySelector('.post-header p').textContent = post.username;
 
   const avatar = article.querySelector('.post-header img');
@@ -154,7 +157,7 @@ const fillPost = (article, post) => {
 let feedPosts = posts.map(post => ({ ...post, liked: false }));
 
 const toggleLike = id => { 
-  feedPosts = feedPosts.map(post =>
+  feedPosts = feedPosts.map(post => 
     post.id === id
       ? {
         ...post,
@@ -163,6 +166,8 @@ const toggleLike = id => {
       }
       : post
   );
+  console.log('ok');
+
   render(feedPosts);
 };
 
@@ -201,4 +206,11 @@ feedMain.addEventListener('click', event => {
     return;
   }
   console.log(`버튼을 눌렀어요 —${event.target.textContent}`);
+  
+  const article = event.target.closest('article');
+  const id = article.getAttribute('data-id');
+
+  if (event.target.closest('.like-btn')) {
+    toggleLike(Number(id));
+  }
 });
