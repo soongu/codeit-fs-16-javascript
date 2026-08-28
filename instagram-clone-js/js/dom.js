@@ -99,9 +99,9 @@ const cardShell = `
   </figure>
 
   <div class="post-actions">
-    <button type="button" class="icon-btn">♡</button>
-    <button type="button" class="icon-btn">💬</button>
-    <button type="button" class="icon-btn">↗</button>
+    <button type="button" class="icon-btn like-btn">♡</button>
+    <button type="button" class="icon-btn comment-btn">💬</button>
+    <button type="button" class="icon-btn share-btn">↗</button>
   </div>
 
   <p class="like-count"></p>
@@ -136,7 +136,8 @@ const fillPost = (article, post) => {
 
   article.querySelector('figcaption').textContent = post.caption;
   article.querySelector('.like-count').textContent = `좋아요 ${post.likes}개`;
-  const likeBtn = article.querySelector('.icon-btn');
+  
+  const likeBtn = article.querySelector('.like-btn');
   if (post.liked) {
     likeBtn.textContent = '♥';
     likeBtn.classList.add('is-liked');
@@ -171,15 +172,12 @@ const createCard = (post) => {
 
   fillPost(article, post);
 
-  article.querySelector('.icon-btn').addEventListener('click', event => { 
-    toggleLike(post.id);
-  });
-
   return article;
 };
 
+const feedMain = document.querySelector('main');
+
 const render = (posts) => {
-  const feedMain = document.querySelector('main');
   feedMain.innerHTML = '';
 
   for (const post of posts) {
@@ -190,3 +188,17 @@ const render = (posts) => {
 render(feedPosts);
 
 
+// 전역적으로 main에 이벤트를 딱 1번만 건다.
+feedMain.addEventListener('click', event => {
+
+  // 모든 버튼에서만 이벤트가 터지도록 설정
+  const button = event.target.closest('.icon-btn');
+  // const button = event.target.classList.contains('icon-btn');
+  // console.log('지금 누른것!',event.target);
+  // console.log('버튼인가? ', button);
+
+  if (!button) {
+    return;
+  }
+  console.log(`버튼을 눌렀어요 —${event.target.textContent}`);
+});
