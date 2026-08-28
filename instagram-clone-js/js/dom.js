@@ -150,7 +150,7 @@ const fillPost = (article, post) => {
   fillTags(article, post.hashtags);
 };
 
-let feedPosts = posts.map(post => ({...post, liked: false}));
+let feedPosts = posts.map(post => ({ ...post, liked: false }));
 
 const toggleLike = id => { 
   feedPosts = feedPosts.map(post =>
