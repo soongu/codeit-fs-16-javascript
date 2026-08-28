@@ -115,6 +115,8 @@ const cardShell = `
     <button type="button" class="icon-btn">↗</button>
   </div>
 
+  <p class="like-count"></p>
+
   <div class="hashtags"></div>
 `;
 
@@ -144,7 +146,10 @@ const fillPost = (article, post) => {
   photo.setAttribute('alt', post.alt);
 
   article.querySelector('figcaption').textContent = post.caption;
+  article.querySelector('.like-count').textContent = `좋아요 ${post.likes}개`;
 
+  fillLocation(article, post.location);
+  fillTags(article, post.hashtags);
 };
 
 const createCard = (post) => {
@@ -152,7 +157,6 @@ const createCard = (post) => {
   article.innerHTML = cardShell;
 
   fillPost(article, post);
-  fillTags(article, post.hashtags);
   return article;
 };
 
