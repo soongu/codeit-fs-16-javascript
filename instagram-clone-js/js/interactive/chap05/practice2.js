@@ -23,8 +23,9 @@ document.querySelector('#intro-box').textContent = bio.textContent;
 
 // 6. 출력
 const textarea = form.querySelector('textarea');
+const label = form.querySelector('label');
 console.log(`입력칸 이름 ${textarea.getAttribute('id')}`);
-console.log(`라벨이 가리키는 이름 ${textarea.previousElementSibling.getAttribute('for')}`);
+console.log(`라벨이 가리키는 이름 ${label.getAttribute('for')}`);
 const introBoxCount = [...document.querySelectorAll('#intro-box')].length;
 console.log(`페이지에 그 이름을 가진 요소 ${introBoxCount}개`);
 
