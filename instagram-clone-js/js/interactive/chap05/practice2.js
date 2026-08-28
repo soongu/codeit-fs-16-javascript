@@ -19,7 +19,7 @@ form.innerHTML = `
 bio.after(form);
 
 // 5. 입력 칸에 지금 소개 글 미리담기
-document.querySelector('#intro-box').textContent = bio.textContent;
+document.querySelector('#intro-box').value = bio.textContent;
 
 // 6. 출력
 const textarea = form.querySelector('textarea');
