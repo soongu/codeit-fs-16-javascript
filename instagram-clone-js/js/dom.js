@@ -1,9 +1,12 @@
 // 서버 통신 시작함수
 const loadPosts = () => { 
   console.log('서버에서 피드목록을 불러옵니다...');
+  const data = fetch('http://localhost:3001/posts');
+  const json = data.then(response => response.json());
+  return json;
 };
 
-let feedPosts = loadPosts() ?? posts.map((post) => ({ ...post, liked: false, comments: [] }));
+let feedPosts = loadPosts();
 
 const card = document.querySelector('article');
 
@@ -142,7 +145,7 @@ const toggleLike = id => {
       : post
   );
 
-  saveFeed(feedPosts);
+  // saveFeed(feedPosts);
   render(feedPosts);
 };
 
@@ -165,7 +168,8 @@ const render = (posts) => {
   }
 };
 
-render(feedPosts);
+feedPosts.then((results) => render(results.map(p => ({...p, comments:[]}))));
+// render(feedPosts);
 
 
 // 댓글을 등록하는 함수
@@ -182,7 +186,7 @@ const addComment = (id, text) => {
     )
   );
 
-  saveFeed(feedPosts);
+  // saveFeed(feedPosts);
   render(feedPosts);
 };
 

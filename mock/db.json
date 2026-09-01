@@ -2,8 +2,8 @@
   "posts": [
     {
       "id": 1,
-      "username": "피카츄",
-      "caption": "새벽 러닝 🌙",
+      "username": "pikachu",
+      "caption": "피카피카츄츄츄~~",
       "likes": 2100,
       "image": "https://picsum.photos/seed/post4/600/600",
       "alt": "새벽 한강 산책로 사진",
@@ -11,7 +11,7 @@
         "name": "여의도한강공원",
         "city": "서울"
       },
-      "hashtags": ["새벽러닝", "한강", "러닝스타그램"]
+      "hashtags": ["전기공격", "한강", "러닝스타그램"]
     },
     {
       "id": 2,
