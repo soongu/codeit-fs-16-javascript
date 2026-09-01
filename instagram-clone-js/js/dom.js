@@ -1,11 +1,16 @@
+// 서버 통신 시작함수
+const loadPosts = () => { 
+  console.log('서버에서 피드목록을 불러옵니다...');
+};
 
-let feedPosts = loadFeed() ?? posts.map((post) => ({ ...post, liked: false, comments: [] }));
+let feedPosts = loadPosts() ?? posts.map((post) => ({ ...post, liked: false, comments: [] }));
 
 const card = document.querySelector('article');
 
 
 const box = document.querySelector('.hashtags');
 const first = box.querySelector('.hashtag-chip');
+
 
 
 const fillTags = (article, hashtags) => {
