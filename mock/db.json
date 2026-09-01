@@ -35,7 +35,7 @@
       "id": 4,
       "username": "minji",
       "caption": "새로 생긴 카페 ☕",
-      "likes": 0,
+      "likes": 777,
       "image": "https://picsum.photos/seed/post2/600/600",
       "alt": "카페에서 마신 커피 사진",
       "hashtags": []
@@ -78,6 +78,23 @@
       "alt": "새로 산 러닝화 사진",
       "location": { "name": "성수동", "city": "서울" },
       "hashtags": ["러닝", "러닝스타그램"]
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "postId": 1,
+      "text": "새벽에 러닝하시다니 부지런하시군요?!"
+    },
+    {
+      "id": 2,
+      "postId": 2,
+      "text": "가로등 불빛이 너무나 이쁩니다 ㅎㅎㅎ "
+    },
+    {
+      "id": 3,
+      "postId": 1,
+      "text": "별말씀을요.. ㅎㅎㅎ"
     }
   ]
 }
