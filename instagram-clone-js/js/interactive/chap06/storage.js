@@ -1,4 +1,4 @@
-const FEED_KEY = 'feed';
+const FEED_KEY = 'feed'; // 상수
 
 const saveFeed = (list) => {
   localStorage.setItem(FEED_KEY, JSON.stringify(list));

@@ -120,7 +120,6 @@ const fillPost = (article, post) => {
 
   const box = article.querySelector('.comment-form textarea');
   box.setAttribute('id', `comment-${post.id}`);
-  
   article
     .querySelector('.comment-form label')
     .setAttribute('for', `comment-${post.id}`);
@@ -166,15 +165,17 @@ render(feedPosts);
 
 // 댓글을 등록하는 함수
 const addComment = (id, text) => { 
+
   // 댓글이 작성되면 댓글의 내용을 posts배열에 있는 해당 피드 객체를 찾아서
   // 그 객체 안에 comments배열에 쌓는다.
 
   //1. id에 해당하는 객체를 탐색해낸다.
   feedPosts = feedPosts.map(post => (
-    post.id === id
-      ? { ...post, comments: [...post.comments, text] } 
-      : post
-  ));
+      post.id === id
+        ? { ...post, comments: [...post.comments, text] }
+        : post
+    )
+  );
 
   saveFeed(feedPosts);
   render(feedPosts);
