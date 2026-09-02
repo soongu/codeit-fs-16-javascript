@@ -9,11 +9,18 @@ const url = 'https://pokeapi.co/api/v2/pokemon';
 // ===== 함수 정의 ===== //
 
 // 포켓몬 목록을 화면에 그리는 함수
-const renderPokemonList = (pokemonList) => {
+const renderPokemonList = async (pokemonList) => {
   for (const pokemon of pokemonList) {
+
+    // 각 포켓몬의 상세정보를 다시 서버에 재요청
+    const res = await fetch(pokemon.url);
+    const pokemonData = await res.json();
+    const imgSrc = pokemonData.sprites.front_default;
+
     const newDiv = document.createElement('div');
     newDiv.classList.add('pokemon');
     newDiv.innerHTML = `
+      <img src="${imgSrc}" alt="${pokemon.name}">
       <h3>${pokemon.name}</h3>
     `;
 
