@@ -1,9 +1,34 @@
 // 서버 통신 시작함수
-const loadPosts = () => { 
+const loadPosts = async () => { 
   console.log('서버에서 피드목록을 불러옵니다...');
-  const data = fetch('http://localhost:3001/posts');
-  const json = data.then(response => response.json());
-  return json;
+  try {
+    const response = await fetch('http://localhost:3001/postㅋ');
+    const json = response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        `게시물을 못 받았어요 — 서버가${response.status} 로 답했어요`,
+      );
+    }
+
+    return json;
+  } catch (err) {
+    console.log(err);
+    const div = document.createElement('div');
+    div.style.width = '200px';
+    div.style.height = '100px';
+    div.style.position = 'fixed';
+    div.style.right = '5%';
+    div.style.top = '15%';
+    div.style.background = 'red';
+    div.style.color = 'white';
+    div.textContent = err;
+    document.body.prepend(div);
+
+    setTimeout(() => { 
+      div.style.display = 'none';
+    }, 20000);
+  }
 };
 
 let feedPosts = loadPosts();
