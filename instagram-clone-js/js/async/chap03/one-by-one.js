@@ -15,3 +15,7 @@ upload('사진 1', 300)
   .then(() => {
     console.log(`걸린 시간${Math.round((Date.now() - started) / 100) / 10}초`);
   });
+
+upload('사진1', 300);
+upload('사진2', 500);
+upload('사진3', 400);
