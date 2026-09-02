@@ -17,10 +17,23 @@
   padding: 0.75rem 1rem;
   background-color: #ffffff;
   border-bottom: 1px solid #dbdbdb;
+  z-index: 10;
 }
 
+/* 고정 헤더는 문서 흐름에서 빠져 있어서 본문을 스스로 밀어내지 못한다.
+   그만큼을 main 이 직접 비워둬야 첫 게시물이 헤더에 가려지지 않는다.
+   높이를 4rem 으로 박아두면 헤더 안에 줄이 하나 늘어나는 순간 어긋나므로,
+   자바스크립트가 실제 높이를 --header-height 로 알려주고
+   그 값이 없을 때만 4rem 을 쓴다. */
+
 .site-header + main {
-  padding-top: 4rem;
+  padding-top: calc(var(--header-height, 4rem) + 1rem);
+}
+
+/* 공유 버튼이 #post-3 같은 해시로 점프할 때도 같은 만큼 띄워준다 */
+
+main article[id^="post-"] {
+  scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
 }
 
 /* Step 5: justify-content·align-items로 nav 정렬 완성 */
@@ -163,3 +176,15 @@ article figure img {
  .is-liked {
   color: #f00;
  }
+
+ .toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.25rem;
+  background: #262626;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}

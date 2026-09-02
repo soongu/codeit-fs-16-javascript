@@ -1,63 +1,4 @@
-// 서버 통신 시작함수
-const loadPosts = async () => { 
-  console.log('서버에서 피드목록을 불러옵니다...');
-  try {
-    const response = await fetch('http://localhost:3001/postㅋ');
-    const json = response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        `게시물을 못 받았어요 — 서버가${response.status} 로 답했어요`,
-      );
-    }
-
-    return json;
-  } catch (err) {
-    console.log(err);
-    const div = document.createElement('div');
-    div.style.width = '200px';
-    div.style.height = '100px';
-    div.style.position = 'fixed';
-    div.style.right = '5%';
-    div.style.top = '15%';
-    div.style.background = 'red';
-    div.style.color = 'white';
-    div.textContent = err;
-    document.body.prepend(div);
-
-    setTimeout(() => { 
-      div.style.display = 'none';
-    }, 20000);
-  }
-};
-
-let feedPosts = loadPosts();
-
-const card = document.querySelector('article');
-
-
-const box = document.querySelector('.hashtags');
-const first = box.querySelector('.hashtag-chip');
-
-
-
-const fillTags = (article, hashtags) => {
-  const box = article.querySelector('.hashtags');
-
-  for (const old of box.querySelectorAll('.hashtag-chip')) {
-    old.remove();
-  }
-
-  for (const tag of hashtags) {
-    const chip = document.createElement('span');
-    chip.classList.add('hashtag-chip');
-    chip.textContent = `#${tag}`;
-    box.append(chip);
-  }
-};
-
-
-// step 7
+// instagram-clone-js/js/dom.js
 const cardShell = `
   <header class="post-header">
     <img alt="" />
@@ -102,6 +43,21 @@ const fillLocation = (article, location) => {
   }
 };
 
+const fillTags = (article, hashtags) => {
+  const box = article.querySelector('.hashtags');
+
+  for (const old of box.querySelectorAll('.hashtag-chip')) {
+    old.remove();
+  }
+
+  for (const tag of hashtags) {
+    const chip = document.createElement('span');
+    chip.classList.add('hashtag-chip');
+    chip.textContent = `#${tag}`;
+    box.append(chip);
+  }
+};
+
 const fillComments = (article, comments) => {
   const list = article.querySelector('.comment-list');
 
@@ -117,11 +73,8 @@ const fillComments = (article, comments) => {
 };
 
 const fillPost = (article, post) => {
-
   article.setAttribute('data-id', post.id);
-  // 공유하기 기능을 위한 id 부여
   article.setAttribute('id', `post-${post.id}`);
-
   article.querySelector('.post-header p').textContent = post.username;
 
   const avatar = article.querySelector('.post-header img');
@@ -137,124 +90,307 @@ const fillPost = (article, post) => {
 
   article.querySelector('figcaption').textContent = post.caption;
   article.querySelector('.like-count').textContent = `좋아요 ${post.likes}개`;
-  
-  const likeBtn = article.querySelector('.like-btn');
-  if (post.liked) {
-    likeBtn.textContent = '♥';
-    likeBtn.classList.add('is-liked');
-  } else {
-    likeBtn.textContent = '♡';
-    likeBtn.classList.remove('is-liked');
-  }
-  
-  fillLocation(article, post.location);
-  fillTags(article, post.hashtags);
-  fillComments(article, post.comments);
+  article.querySelector('.like-btn').textContent = post.liked ? '♥' : '♡';
 
   const box = article.querySelector('.comment-form textarea');
   box.setAttribute('id', `comment-${post.id}`);
   article
     .querySelector('.comment-form label')
     .setAttribute('for', `comment-${post.id}`);
-};
 
-
-const toggleLike = id => { 
-  feedPosts = feedPosts.map(post => 
-    post.id === id
-      ? {
-        ...post,
-        liked: !post.liked,
-        likes: post.likes + (post.liked ? -1 : 1)
-      }
-      : post
-  );
-
-  // saveFeed(feedPosts);
-  render(feedPosts);
+  fillLocation(article, post.location);
+  fillTags(article, post.hashtags);
+  fillComments(article, post.comments);
 };
 
 const createCard = (post) => {
   const article = document.createElement('article');
   article.innerHTML = cardShell;
-
   fillPost(article, post);
-
   return article;
 };
 
 const feedMain = document.querySelector('main');
 
-const render = (posts) => {
-  feedMain.innerHTML = '';
+// 고정 헤더 높이를 CSS 에 알려준다.
+// showProfile() 이 헤더 안에 프로필 줄을 붙이면 헤더가 그만큼 커지는데,
+// CSS 혼자서는 그 변화를 알 수 없어 첫 게시물이 헤더 밑에 깔린다.
+const siteHeader = document.querySelector('.site-header');
 
-  for (const post of posts) {
-    feedMain.append(createCard(post));
+const syncHeaderHeight = () => {
+  document.documentElement.style.setProperty(
+    '--header-height',
+    `${siteHeader.offsetHeight}px`,
+  );
+};
+
+// observe() 하는 순간 한 번 실행되고, 이후 높이가 바뀔 때마다 다시 실행된다
+new ResizeObserver(syncHeaderHeight).observe(siteHeader);
+
+const sentinel = document.createElement('div');
+sentinel.classList.add('scroll-sentinel');
+feedMain.append(sentinel);
+
+const render = (list) => {
+  for (const old of feedMain.querySelectorAll('article')) {
+    old.remove();
+  }
+
+  for (const post of list) {
+    feedMain.insertBefore(createCard(post), sentinel);
   }
 };
 
-feedPosts.then((results) => render(results.map(p => ({...p, comments:[]}))));
-// render(feedPosts);
+const describeStatus = (status) => {
+  if (status === 404) {
+    return '그런 건 없대요';
+  }
 
+  if (status >= 500) {
+    return '서버가 아픈가 봐요. 잠시 뒤에 다시 해주세요';
+  }
 
-// 댓글을 등록하는 함수
-const addComment = (id, text) => { 
+  return `서버가 ${status} 로 답했어요`;
+};
 
-  // 댓글이 작성되면 댓글의 내용을 posts배열에 있는 해당 피드 객체를 찾아서
-  // 그 객체 안에 comments배열에 쌓는다.
-
-  //1. id에 해당하는 객체를 탐색해낸다.
-  feedPosts = feedPosts.map(post => (
-      post.id === id
-        ? { ...post, comments: [...post.comments, text] }
-        : post
-    )
+const loadPosts = async (page) => {
+  const response = await fetch(
+    `http://localhost:3001/posts?_page=${page}&_per_page=3`,
+    {
+      signal: AbortSignal.timeout(2000),
+    },
   );
 
-  // saveFeed(feedPosts);
+  if (!response.ok) {
+    throw new Error(
+      `게시물을 못 받았어요 — ${describeStatus(response.status)}`,
+    );
+  }
+
+  const envelope = await response.json();
+
+  return {
+    posts: envelope.data.map((post) => ({ ...post, id: Number(post.id) })),
+    next: envelope.next,
+  };
+};
+
+const loadProfile = async () => {
+  const response = await fetch('http://localhost:3001/users/1');
+
+  if (!response.ok) {
+    throw new Error(`계정을 못 받았어요 — ${describeStatus(response.status)}`);
+  }
+
+  return response.json();
+};
+
+const createComment = async (postId, text) => {
+  const response = await fetch('http://localhost:3001/comments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ postId, username: 'jaehoon', text }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`댓글을 못 보냈어요 — ${describeStatus(response.status)}`);
+  }
+
+  return response.json();
+};
+
+const loadComments = async () => {
+  const response = await fetch('http://localhost:3001/comments');
+
+  if (!response.ok) {
+    throw new Error(`댓글을 못 받았어요 — ${describeStatus(response.status)}`);
+  }
+
+  return response.json();
+};
+
+let feedPosts = [];
+
+const addComment = (id, text) => {
+  feedPosts = feedPosts.map((post) =>
+    post.id === id ? { ...post, comments: [...post.comments, text] } : post,
+  );
   render(feedPosts);
 };
 
+const toggleLike = (id) => {
+  feedPosts = feedPosts.map((post) =>
+    post.id === id
+      ? {
+          ...post,
+          liked: !post.liked,
+          likes: post.likes + (post.liked ? -1 : 1),
+        }
+      : post,
+  );
+  saveFeed(feedPosts);
+  render(feedPosts);
+};
 
-
-//=========== 이벤트 바인딩 ==============//
-
-// 전역적으로 main에 이벤트를 딱 1번만 건다.
-feedMain.addEventListener('click', event => {
-
-  // 모든 버튼에서만 이벤트가 터지도록 설정
+feedMain.addEventListener('click', (event) => {
   const button = event.target.closest('.icon-btn');
-  // const button = event.target.classList.contains('icon-btn');
-  // console.log('지금 누른것!',event.target);
-  // console.log('버튼인가? ', button);
 
   if (!button) {
     return;
   }
-  console.log(`버튼을 눌렀어요 —${event.target.textContent}`);
-  
-  const article = event.target.closest('article');
-  const id = article.getAttribute('data-id');
 
-  if (event.target.closest('.like-btn')) { // 좋아요 버튼에 대한 동작
-    toggleLike(Number(id));
-  } else if (event.target.closest('.share-btn')) {
-    window.location.hash = `post-${id}`;
-  } else if (event.target.closest('.comment-btn')) {
+  const id = Number(button.closest('article').getAttribute('data-id'));
+
+  if (button.classList.contains('like-btn')) {
+    toggleLike(id);
+  } else if (button.classList.contains('comment-btn')) {
     document.querySelector(`#comment-${id}`).focus();
+  } else if (button.classList.contains('share-btn')) {
+    window.location.hash = `post-${id}`;
   }
 });
 
-feedMain.addEventListener('submit', (event) => {
+let sending = false;
+
+feedMain.addEventListener('submit', async (event) => {
   event.preventDefault();
-  
-  
-  // 어떤 피드에 댓글을 썼는지
+
+  const box = event.target.querySelector('textarea');
+  const text = box.value.trim();
+
+  if (text === '' || sending) {
+    return;
+  }
+
+  sending = true;
+
+  const button = event.target.querySelector('button');
+
+  button.disabled = true;
+  button.textContent = '게시 중...';
+
   const id = Number(event.target.closest('article').getAttribute('data-id'));
-  // 무슨 댓글을 썼는지
-  const text = event.target.querySelector('textarea').value.trim();
 
-  addComment(id, text);
+  try {
+    const saved = await createComment(id, text);
 
-
+    addComment(id, saved.text);
+    box.value = '';
+  } catch (reason) {
+    showCommentError(event.target, reason.message);
+  } finally {
+    sending = false;
+    button.disabled = false;
+    button.textContent = '게시';
+  }
 });
+
+const showCommentError = (form, message) => {
+  for (const old of form.querySelectorAll('.comment-error')) {
+    old.remove();
+  }
+
+  const line = document.createElement('p');
+  line.classList.add('comment-error');
+  line.textContent = message;
+  form.append(line);
+};
+
+const showToast = (message) => {
+  const toast = document.createElement('div');
+  toast.classList.add('toast');
+  toast.textContent = message;
+  document.body.append(toast);
+
+  setTimeout(() => toast.remove(), 3000);
+};
+
+const showProfile = (profile) => {
+  const line = document.createElement('p');
+  line.classList.add('my-profile');
+  line.textContent = `${profile.username} 님 · 팔로워 ${profile.followers}명`;
+  document.querySelector('.site-header nav').append(line);
+};
+
+let myComments = [];
+let currentPage = 1;
+
+const grow = (posts) => {
+  const saved = loadFeed() ?? [];
+
+  return posts.map((post) => {
+    const mine = saved.find((item) => item.id === post.id);
+    const mySlice = myComments.filter((comment) => comment.postId === post.id);
+
+    return {
+      ...post,
+      liked: mine?.liked ?? false,
+      comments: mySlice.map((c) => c.text),
+    };
+  });
+};
+
+let loading = false;
+let hasMore = true;
+
+const loadPage = async () => {
+  if (loading || !hasMore) {
+    return;
+  }
+
+  loading = true;
+
+  try {
+    console.log(`${currentPage}페이지를 달라고 했어요`);
+
+    const { posts, next } = await loadPosts(currentPage);
+
+    feedPosts = [...feedPosts, ...grow(posts)];
+    render(feedPosts);
+
+    console.log(`화면에 ${feedPosts.length}장 · 다음 ${next}`);
+
+    hasMore = next !== null;
+    currentPage += 1;
+  } catch (reason) {
+    showToast(reason.message);
+  } finally {
+    loading = false;
+  }
+};
+
+const watchSentinel = () => {
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      loadPage();
+    }
+  });
+
+  observer.observe(sentinel);
+};
+
+const start = async () => {
+  render([]);
+
+  const [profile, comments] = await Promise.allSettled([
+    loadProfile(),
+    loadComments(),
+  ]);
+
+  if (profile.status === 'fulfilled') {
+    showProfile(profile.value);
+  } else {
+    showToast(profile.reason.message);
+  }
+
+  if (comments.status === 'fulfilled') {
+    myComments = comments.value;
+  } else {
+    showToast(comments.reason.message);
+  }
+
+  await loadPage();
+  watchSentinel();
+};
+
+start();
