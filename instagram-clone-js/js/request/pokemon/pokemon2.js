@@ -163,9 +163,11 @@ const openModal = async (pokemonName) => {
   // 모달이 열릴 때 뒷배경 스크롤링 방지
   document.body.style.overflow = 'hidden';
 
-  // 명시적으로 스켈레톤을 끄고 컨텐츠를 렌더링
-  modalSkeleton.style.display = 'none';
-  modalContent.style.display = 'flex';
+  // 명시적으로 스켈레톤을 켜고 컨텐츠를 숨김
+  modalSkeleton.style.display = 'flex';
+  modalContent.style.display = 'none';
+
+  isLoading = true;
 
   // 지금 클릭한 포켓몬이 누구?
   // console.log('클릭한 포켓몬: ', pokemonName);
@@ -193,6 +195,13 @@ const openModal = async (pokemonName) => {
 
     modalTypes.append(liTag);
   }
+
+  // 강제로 0.5초 로딩을 부여
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  isLoading = false;
+  modalSkeleton.style.display = 'none';
+  modalContent.style.display = 'flex';
 
 };
 
