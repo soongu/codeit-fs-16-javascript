@@ -1,9 +1,9 @@
 const FEED_KEY = 'feed'; // 상수
 
-const saveFeed = (list) => {
+export const saveFeed = (list) => {
   localStorage.setItem(FEED_KEY, JSON.stringify(list));
 };
-const loadFeed = () => {
+export const loadFeed = () => {
   const text = localStorage.getItem(FEED_KEY);
 
   if (text === null) {

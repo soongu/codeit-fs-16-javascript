@@ -154,6 +154,12 @@
       "username": "jaehoon",
       "text": "ㄴㄹㅁㅇㄹ",
       "id": "Q-R_2vsNQVs"
+    },
+    {
+      "postId": 1,
+      "username": "jaehoon",
+      "text": "dfs",
+      "id": "o8YmitIJuqQ"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

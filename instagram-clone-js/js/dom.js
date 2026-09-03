@@ -1,4 +1,8 @@
 // instagram-clone-js/js/dom.js
+import { showCommentError, showToast } from './module/toast.js';
+import { saveFeed, loadFeed } from './interactive/chap06/storage.js';
+
+
 const cardShell = `
   <header class="post-header">
     <img alt="" />
@@ -285,25 +289,7 @@ feedMain.addEventListener('submit', async (event) => {
   }
 });
 
-const showCommentError = (form, message) => {
-  for (const old of form.querySelectorAll('.comment-error')) {
-    old.remove();
-  }
 
-  const line = document.createElement('p');
-  line.classList.add('comment-error');
-  line.textContent = message;
-  form.append(line);
-};
-
-const showToast = (message) => {
-  const toast = document.createElement('div');
-  toast.classList.add('toast');
-  toast.textContent = message;
-  document.body.append(toast);
-
-  setTimeout(() => toast.remove(), 3000);
-};
 
 const showProfile = (profile) => {
   const line = document.createElement('p');
